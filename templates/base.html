@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>{% block title %}Document{% endblock %}</title>
+    {% block link %}
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <!-- Navbar content -->
+     
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+    
+            <a class="nav-link active" href="{% url 'post' %}" style="color: aliceblue;">H O M E</a>
+        </li>
+        {% if not user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}" style="color: aliceblue">LOGIN</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}" style="color: aliceblue">SIGN UP</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}" style="color: aliceblue">LOGOUT</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'create' %}" style="color: aliceblue">CREATE POST</a>
+        </li>
+        {% endif %}
+        {% if request.user.is_authenticated and post.id and request.user == post.author %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'delete' post.id %}" style="color: aliceblue">DELETE POST</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'update' post.id %}" style="color: aliceblue">UPDATE POST</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
